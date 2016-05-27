@@ -1,0 +1,31 @@
+<div ng-repeat="VMInfo in VM">
+    <div class="container">
+        <h3>{{VMInfo.Name}}</h3>
+    </div>
+    <div class="row-fluid">
+        <div class="span2">
+            <div id="vmactions" class="btn-group-vertical">
+                <a href="#" class="btn btn-primary">Start</a>
+                <a href="#" class="btn">Pause</a>
+                <a href="#" class="btn">Save</a>
+                <a href="#" class="btn">Shutdown</a>
+                <a href="#" class="btn btn-warning">Reset</a>
+                <a href="#" class="btn btn-warning">Turn off power</a>
+            </div>
+        </div>
+        <div class="span3">
+            <div>
+                <img src="img/vm_200x150.png" class="img-polaroid">
+            </div>
+        </div>
+        <div class="span2">
+            <div class="btn-group-vertical">
+                <a href="#" class="btn">New Snapshot</a>
+                <a href="#" class="btn">Revert</a>
+                <a href="#" class="btn">Management</a>
+            </div>
+            <div>&nbsp;</div>
+            <a href="#" class="btn btn-danger">Delete Virtual Machine</a>
+        </div>
+    </div>
+</div>

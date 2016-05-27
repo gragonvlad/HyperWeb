@@ -1,0 +1,47 @@
+<form class="form-horizontal" ng-submit="NewVM()">
+    <div class="control-group">
+        <label class="control-label" for="inputVMName">Name</label>
+        <div class="controls">
+            <input type="text" id="inputVMName" placeholder="New Virtual Machine">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="inputMemory">Memory Size (Mb)</label>
+        <div class="controls">
+            <input type="text" id="inputMemory" placeholder="1024">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="inputDiskSize">Disk size (Gb)</label>
+        <div class="controls">
+            <input type="text" id="inputDiskSize" placeholder="60">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="isoPath">Path to ISO file</label>
+        <div class="controls">
+            <input type="text" id="isoPath" placeholder="\\server\shared\ISO\windows.iso">
+        </div>
+    </div>
+
+
+
+    <!--<div class="control-group">-->
+        <!--<label class="control-label" for="inputPassword">Password</label>-->
+
+        <!--<div class="controls">-->
+            <!--<input type="password" id="inputPassword" placeholder="Password">-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="control-group">
+        <div class="controls">
+            <!--<label class="checkbox">-->
+                <!--<input type="checkbox"> Remember me-->
+            <!--</label>-->
+            <button type="submit" class="btn">Create</button>
+        </div>
+    </div>
+</form>

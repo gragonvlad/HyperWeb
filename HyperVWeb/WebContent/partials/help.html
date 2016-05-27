@@ -1,0 +1,31 @@
+<div class="container-fluid">
+    <div class="span6">
+        <h3>About</h3>
+        <p>Hyper-V Web interface</p>
+        <p>All Rights Reserved</p>
+        <p>Roman Blinkov &copy; 2013</p>
+        <p><a href="mailto:roman@blinkov.com">roman@blinkov.com</a></p>
+    </div>
+    <div class="span12">
+        <h3>Configuration options</h3>
+        <h4>Address</h4>
+        <p>
+            You can choose Hyper-V Web Interface web server ip address and port in ListeningUrl option<br />
+            ListeningUrl: use http://0.0.0.0:80/ or specify already assigned to this machine ip and port. <br />
+            Hint: use <code>ipconfig /all</code> to get info about your networks.
+        </p>
+        <h4>Authentification</h4>
+        <p>
+            Auth: Possible values are: <code>Off, Basic, Windows</code>            
+        </p>
+        <h5>Basic</h5>
+        <p>
+            If Basic auth enabled then usernames and password from BasicAuthUserCredentials are used. <br />
+            Format: <code>username:password</code>
+        </p>
+        <h5>Windows</h5>
+        <p>
+            If Windows auth enabled then users from AllowedWindowsUsers are used. Format: <code>computername\username</code>
+        </p>
+    </div>
+</div>

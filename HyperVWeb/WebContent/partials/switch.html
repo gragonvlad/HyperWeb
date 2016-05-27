@@ -1,0 +1,41 @@
+<div ng-repeat="Adapter in SW">
+    <form class="form-horizontal" ng-submit="EditAdapter(Adapter)" name="EditAdapterForm.{{Adapter.Id}}">
+        <div class="control-group">
+            <label class="control-label" for="AdapterName.{{Adapter.Id}}">Name</label>
+
+            <div class="controls">
+                <input type="text" ng-model="Adapter.Name" id="AdapterName.{{Adapter.Id}}">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="SelectSwitchType.{{Adapter.Id}}">Type:</label>
+
+            <div class="controls">
+                <select name="SelectSwitchType"
+                        id="SelectSwitchType.{{Adapter.Id}}"
+                        ng-model="SwitchType"
+                        ng-required="True"
+                        ng-init="SwitchType = Adapter.SwitchType;"
+                        ng-options="SwitchType for SwitchType in SwitchTypes">
+                </select>
+                <div ng-switch on="!!Adapter.NetAdapterInterfaceDescription">
+                    <div ng-switch-when="true">{{Adapter.NetAdapterInterfaceDescription}}</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="Notes.{{Adapter.Id}}">Notes</label>
+
+            <div class="controls">
+                <textarea name="Notes" id="Notes.{{Adapter.Id}}" cols="30" rows="10"
+                          ng-model="Adapter.Notes"></textarea>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-primary">Edit</button>
+            </div>
+        </div>
+    </form>
+</div>

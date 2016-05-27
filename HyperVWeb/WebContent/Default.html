@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="HyperVWeb" lang="en" >
+<head>
+    <!--[if lte IE 8]>
+    <script>
+        document.createElement('ng-include');
+        document.createElement('ng-pluralize');
+        document.createElement('ng-view');
+
+        // Optionally these for CSS
+        document.createElement('ng:include');
+        document.createElement('ng:pluralize');
+        document.createElement('ng:view');
+    </script>
+    <![endif]-->
+    <meta charset="utf-8">
+    <title>Hyper-V Web Interface</title>
+    <link rel="shortcut icon" href="img/favicon.png" type="image/png">
+    <script src="assets/jquery.min.js"></script>
+    <script src="assets/angular.min.js"></script>
+    <script src="assets/angular-ui-ieshiv.min.js"></script>
+    <script src="assets/ng-grid.js"></script>
+    <script src="ui-bootstrap-tpls-0.1.0.min.js"></script>
+    <script src="assets/select2.js"></script>
+    <script src="assets/ui-select2.js"></script>
+    <script src="assets/plunker.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <!--<script src="js/services.js"></script>-->
+    <link rel="stylesheet" href="assets/bootstrap.css"/>
+    <link rel="stylesheet" href="assets/hvweb.css"/>
+    <link rel="stylesheet" href="assets/ng-grid.css"/>
+</head>
+<body>
+<div class="navbar navbar-fixed-top navbar">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="/">
+                Hyper-V Web Interface
+            </a>
+            <ul class="nav">
+                <li ng-class="{active: $activetab == 'main'}">
+                    <a href="/">
+                        Virtual machines
+                    </a>
+                </li>
+                <li>
+                    <a href="/switch">
+                        Virtual switch
+                    </a>
+                </li>
+                <li ng-class="{active: $activetab == 'help'}">
+                <a href="/help">
+                        Help
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">&nbsp;</div>
+<div style="height: 30px">
+</div>
+<div ng-view></div>
+</body>
+</html>
