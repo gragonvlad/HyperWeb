@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Topshelf;
@@ -17,7 +18,7 @@ namespace HyperVWeb
 
 		private static void Main(string[] args)
 		{
-			HostFactory.Run((HostConfigurator x) => {
+            HostFactory.Run((HostConfigurator x) => {
 				x.UseNLog();
 				x.Service<WindowsService>((ServiceConfigurator<WindowsService> s) => {
 					s.ConstructUsing((HostSettings name) => new WindowsService());
@@ -31,5 +32,5 @@ namespace HyperVWeb
 				x.SetServiceName(versionInfo.InternalName);
 			});
 		}
-	}
+    }
 }

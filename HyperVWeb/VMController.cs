@@ -2,11 +2,15 @@ using HyperVWeb.Controllers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Management;
+using System.Management.Automation;
+using System.Management.Automation.Runspaces;
 using System.Runtime.CompilerServices;
 using System.Web.Http;
+using Utils;
 using WebAPI.OutputCache;
 using WebAPI.OutputCache.TimeAttributes;
 
@@ -79,15 +83,22 @@ namespace HyperVWeb
 		}
 
 		[CacheOutput(ClientTimeSpan=0, ServerTimeSpan=0, MustRevalidate=true)]
-		public IEnumerable<VM> Get()
+		public IEnumerable<dynamic> Get()
 		{
 			return VMController.wmi();
 		}
 
-		internal static List<ManagementObject> GetAllVM(string computerName)
+		internal static Collection<PSObject> GetAllVM(string computerName)
 		{
-			VMController.GetManagementScopeForComputer(computerName);
-			return VMController.GetVMByQuery(computerName, "select * from Msvm_ComputerSystem");
+            //VMController.GetManagementScopeForComputer(computerName);
+            //return VMController.GetVMByQuery(computerName, "select * from Msvm_ComputerSystem");
+            Runspace runspace = RunspaceFactory.CreateRunspace();
+            runspace.Open();
+            Pipeline pipeline = runspace.CreatePipeline();
+            pipeline.Commands.AddScript("Get-VM");
+            Collection<PSObject> pSObjects = pipeline.Invoke();
+            runspace.Close();
+		    return pSObjects;
 		}
 
 		internal static ManagementScope GetManagementScopeForComputer(string computerName)
@@ -155,31 +166,35 @@ namespace HyperVWeb
 			return DateTime.ParseExact(str, "yyyyMMddHHmmss.ffffff", CultureInfo.CurrentCulture);
 		}
 
-		private static IEnumerable<VM> wmi()
+		private static IEnumerable<dynamic> wmi()
 		{
 			Guid guid;
 			string machineName = Environment.MachineName;
 			machineName = "localhost";
-			foreach (ManagementObject allVM in VMController.GetAllVM(machineName))
+			foreach (PSObject allVM in VMController.GetAllVM(machineName))
 			{
-				VM vM = new VM()
-				{
-					Name = allVM.SystemProperties["ElementName"].Value as string
-				};
-				string str = allVM.SystemProperties["Name"].Value.ToString();
-				if (!Guid.TryParse(str, out guid))
-				{
-					continue;
-				}
-				vM.Id = guid;
-				string value = (string)allVM.SystemProperties["InstallDate"].Value;
-				vM.CreationTime = VMController.parsedate(value);
-				vM.Description = allVM.SystemProperties["Description"].Value as string;
-				vM.EnabledState = (VMEnabledState)allVM.SystemProperties["EnabledState"].Value;
-				ulong num = (ulong)allVM.SystemProperties["OnTimeInMilliseconds"].Value;
-				vM.Uptime = TimeSpan.FromMilliseconds((double)((float)num));
-				yield return vM;
+				//VM vM = new VM()
+				//{
+				//	Name = allVM.SystemProperties["ElementName"].Value as string
+				//};
+				//string str = allVM.SystemProperties["Name"].Value.ToString();
+				//if (!Guid.TryParse(str, out guid))
+				//{
+				//	continue;
+				//}
+				//vM.Id = guid;
+				//string value = (string)allVM.SystemProperties["InstallDate"].Value;
+				//vM.CreationTime = VMController.parsedate(value);
+				//vM.Description = allVM.SystemProperties["Description"].Value as string;
+				//vM.EnabledState = (VMEnabledState)allVM.SystemProperties["EnabledState"].Value;
+				//ulong num = (ulong)allVM.SystemProperties["OnTimeInMilliseconds"].Value;
+				//vM.Uptime = TimeSpan.FromMilliseconds((double)((float)num));
+				//yield return vM;
+			    var a = allVM.ToDynamic();
+
+                yield return a;
 			}
 		}
+
 	}
 }

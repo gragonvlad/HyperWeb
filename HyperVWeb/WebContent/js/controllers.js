@@ -1,11 +1,16 @@
 'use strict';
 
 function UpdateVirtualMachines($scope, $http) {
+    if (!lastUpdateSuccessed) {
+        return;
+    }
     var url = "/api/vm/";
 
     var updateVM = function (data) {
         $scope.VM = data;
+        lastUpdateSuccessed = true;
     };
+    lastUpdateSuccessed = false;
     $http.get(url)
         .success(updateVM);
 }
@@ -30,6 +35,7 @@ function VMListCtrl($scope, $http, $location) {
 }
 
 var updateEnabled = false;
+var lastUpdateSuccessed = true;
 function MainCtrl($scope, $http, $location, $route) {
     if (!updateEnabled)
     {
@@ -51,9 +57,13 @@ function MainCtrl($scope, $http, $location, $route) {
         selectedItems:$scope.mySelections,
 //        jqueryUITheme: true,
         columnDefs:[
-            {field:"Name", displayName:"Name"},
-            {field:"EnabledStateString", displayName:"State"},
-            {field:"UptimeString", displayName:"Uptime"}
+            //{ field:"ElementName", displayName:"Name"},
+            //{ field: "EnabledState", displayName: "State"},
+            //{ field: "OnTimeInMilliseconds", displayName: "Uptime", cellTemplate: "<div class='ng-scope ngCellText colt1'><span>{{row.entity[col.field] | duration:'hh:mm:ss:sss'}}</span></div>" }
+            { field: "VMName", displayName: "Name" },
+            { field: "State", displayName: "State" },
+            { field: "MemoryAssigned", displayName: "MemoryAssigned", cellTemplate: "<div class='ng-scope ngCellText colt1'><span>{{row.entity[col.field] /(1024*1024) + ' Mb'}}</span></div>" },
+            { field: "Uptime", displayName: "Uptime" }
         ]};
     var updateGrid = function () {
         var tmp = $scope.mySelections[0];
@@ -107,7 +117,7 @@ function DetailsCtrl($scope, $http, $location) {
         $location.url(url);
     };
 
-    var url = "/api/VMDetails/"
+    var url = "/api/VMDetails/";
     $http.get(url)
         .success(function (data) {
             var obj = angular.fromJson(data);
@@ -143,17 +153,15 @@ function SwitchCtrl($scope, $http, $location) {
     UpdateVirtualSwitches($scope, $http);
     $scope.EditAdapter = function (adapter) {
         $http.post("/api/editswitch", adapter)
-            .success(function(data)
-            {
+            .success(function(data) {
                 $scope.SW = data;
-            })
+            });
     }
 
-    $scope.SaveNewAdapter = function(adapter)
-    {
-        $http.post("/api/newswitch",adapter).success(function(data){
+    $scope.SaveNewAdapter = function(adapter) {
+        $http.post("/api/newswitch", adapter).success(function(data) {
             $scope.SW = data;
-        })
+        });
     }
 
     $scope.NewAdapter = function()

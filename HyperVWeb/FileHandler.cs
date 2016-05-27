@@ -1,6 +1,7 @@
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -68,6 +69,7 @@ namespace HyperVWeb
 			}
 			if (request.RequestUri.AbsolutePath.StartsWith("/api/"))
 			{
+                Debug.Write(request);
 				return base.SendAsync(request, cancellationToken);
 			}
 			return Task<HttpResponseMessage>.Factory.StartNew(() => {

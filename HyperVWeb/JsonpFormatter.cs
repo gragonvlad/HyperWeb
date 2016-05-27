@@ -62,6 +62,7 @@ namespace HyperVWeb
 			JsonpFormatter jsonpFormatter1 = jsonpFormatter;
 			jsonpFormatter1.SerializerSettings.Converters.Add(new StringEnumConverter());
 			jsonpFormatter1.SerializerSettings.Formatting = Formatting.Indented;
+            jsonpFormatter1.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 			return jsonpFormatter1;
 		}
 

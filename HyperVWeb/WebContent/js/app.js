@@ -2,7 +2,7 @@
 
 /* App Module */
 
-angular.module('HyperVWeb', ['ui.directives', 'ui.bootstrap', 'plunker', 'ngGrid'])
+angular.module('HyperVWeb', ['ui.directives', 'ui.bootstrap', 'plunker', 'ngGrid', 'angular-duration-format'])
     .config(['$routeProvider','$locationProvider', function($routeProvider, $locationProvider) {
     // Activates HTML5 History API for modern browsers and sets the hashbang for legacy browsers
     $locationProvider.html5Mode(true).hashPrefix('!');

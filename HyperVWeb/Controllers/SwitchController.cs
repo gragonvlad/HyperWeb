@@ -1,15 +1,12 @@
-using HyperVWeb.Models;
-using Microsoft.HyperV.PowerShell;
-using System;
-using System.Collections;
+extern alias HyperVObjects;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
-using System.Runtime.CompilerServices;
 using System.Web.Http;
 using WebAPI.OutputCache;
+using HyperVObject = HyperVObjects::Microsoft.HyperV.PowerShell;
 
 namespace HyperVWeb.Controllers
 {
@@ -24,7 +21,9 @@ namespace HyperVWeb.Controllers
 		[CacheOutput(ClientTimeSpan=0, ServerTimeSpan=0, MustRevalidate=true)]
 		public IEnumerable<HyperVWeb.Models.VMSwitch> Get()
 		{
-			return this.RunScript(string.Format("Get-VMSwitch -ComputerName {0}", this.HyperVHost));
+            var retVal = this.RunScript(string.Format("Get-VMSwitch -ComputerName {0}", this.HyperVHost));
+            Debug.Print(retVal.ToString());
+		    return retVal;
 		}
 
 		private IEnumerable<HyperVWeb.Models.VMSwitch> RunScript(string scriptText)
@@ -38,7 +37,7 @@ namespace HyperVWeb.Controllers
 			foreach (PSObject pSObject in pSObjects)
 			{
 				HyperVWeb.Models.VMSwitch vMSwitch = new HyperVWeb.Models.VMSwitch();
-				Microsoft.HyperV.PowerShell.VMSwitch immediateBaseObject = (Microsoft.HyperV.PowerShell.VMSwitch)pSObject.ImmediateBaseObject;
+                HyperVObject.VMSwitch immediateBaseObject = (HyperVObject.VMSwitch)pSObject.ImmediateBaseObject;
 				vMSwitch.Name = immediateBaseObject.Name;
 				vMSwitch.Id = immediateBaseObject.Id;
 				vMSwitch.Notes = immediateBaseObject.Notes;
